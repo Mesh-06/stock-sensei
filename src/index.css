@@ -135,10 +135,11 @@
     -webkit-text-fill-color: transparent;
     color: transparent;
   }
-  .bg-success-muted { background: hsl(var(--success) / 0.12); color: hsl(var(--success)); }
-  .bg-danger-muted { background: hsl(var(--danger) / 0.12); color: hsl(var(--danger)); }
-  .text-success { color: hsl(var(--success)); }
-  .text-danger { color: hsl(var(--danger)); }
+  .bg-success-muted { background: hsl(0 0% 0% / 0.06); color: hsl(var(--foreground)); }
+  .bg-danger-muted { background: hsl(0 0% 0% / 0.06); color: hsl(var(--foreground)); }
+  .text-success { color: hsl(var(--foreground)); }
+  .text-danger { color: hsl(var(--muted-foreground)); }
+  .text-warning { color: hsl(var(--muted-foreground)); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .shadow-card { box-shadow: var(--shadow-card); }
   .tabular-nums { font-variant-numeric: tabular-nums; }
