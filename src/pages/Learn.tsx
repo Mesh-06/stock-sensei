@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { LessonAITutor } from "@/components/LessonAITutor";
 import { BookOpen, ChevronRight, Calculator, Search, GraduationCap, Sparkles } from "lucide-react";
 
 interface Lesson {
