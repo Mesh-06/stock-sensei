@@ -17,6 +17,9 @@ const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const StockDetail = lazy(() => import("./pages/StockDetail"));
 const Chatbot = lazy(() => import("./pages/Chatbot"));
 const Health = lazy(() => import("./pages/Health"));
+const Learn = lazy(() => import("./pages/Learn"));
+const Sectors = lazy(() => import("./pages/Sectors"));
+const Compare = lazy(() => import("./pages/Compare"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient({
@@ -55,9 +58,9 @@ const App = () => (
                   path="/watchlist"
                   element={<ProtectedRoute><Health /></ProtectedRoute>}
                 />
-                <Route path="/learn" element={<Index />} />
-                <Route path="/compare" element={<Index />} />
-                <Route path="/sectors" element={<Index />} />
+                <Route path="/learn" element={<Learn />} />
+                <Route path="/compare" element={<Compare />} />
+                <Route path="/sectors" element={<Sectors />} />
                 <Route path="/profile" element={<ProtectedRoute><Health /></ProtectedRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
