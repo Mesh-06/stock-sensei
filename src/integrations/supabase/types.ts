@@ -14,7 +14,227 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "chat_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_holdings: {
+        Row: {
+          avg_price: number
+          created_at: string
+          current_price: number
+          exchange: string
+          id: string
+          name: string
+          purchased_at: string
+          quantity: number
+          symbol: string
+          user_id: string
+        }
+        Insert: {
+          avg_price: number
+          created_at?: string
+          current_price?: number
+          exchange?: string
+          id?: string
+          name: string
+          purchased_at?: string
+          quantity: number
+          symbol: string
+          user_id: string
+        }
+        Update: {
+          avg_price?: number
+          created_at?: string
+          current_price?: number
+          exchange?: string
+          id?: string
+          name?: string
+          purchased_at?: string
+          quantity?: number
+          symbol?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      price_alerts: {
+        Row: {
+          created_at: string
+          direction: string
+          exchange: string
+          id: string
+          symbol: string
+          target_price: number
+          triggered: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          direction: string
+          exchange?: string
+          id?: string
+          symbol: string
+          target_price: number
+          triggered?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          direction?: string
+          exchange?: string
+          id?: string
+          symbol?: string
+          target_price?: number
+          triggered?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          id: string
+          name: string | null
+          notifications_enabled: boolean
+          preferred_sectors: string[]
+          risk_appetite: string
+          theme: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          id: string
+          name?: string | null
+          notifications_enabled?: boolean
+          preferred_sectors?: string[]
+          risk_appetite?: string
+          theme?: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          id?: string
+          name?: string | null
+          notifications_enabled?: boolean
+          preferred_sectors?: string[]
+          risk_appetite?: string
+          theme?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      stock_cache: {
+        Row: {
+          action: string
+          cache_key: string
+          exchange: string
+          id: string
+          payload: Json
+          symbol: string
+          updated_at: string
+        }
+        Insert: {
+          action: string
+          cache_key: string
+          exchange?: string
+          id?: string
+          payload: Json
+          symbol: string
+          updated_at?: string
+        }
+        Update: {
+          action?: string
+          cache_key?: string
+          exchange?: string
+          id?: string
+          payload?: Json
+          symbol?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      watchlist: {
+        Row: {
+          added_at: string
+          exchange: string
+          id: string
+          symbol: string
+          user_id: string
+        }
+        Insert: {
+          added_at?: string
+          exchange?: string
+          id?: string
+          symbol: string
+          user_id: string
+        }
+        Update: {
+          added_at?: string
+          exchange?: string
+          id?: string
+          symbol?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
