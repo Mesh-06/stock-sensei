@@ -26,6 +26,8 @@ const GLOBAL_TICKERS = new Set([
 
 function buildTicker(symbol: string, exchange: string): string {
   const sym = symbol.toUpperCase().trim();
+  if (sym.startsWith("^")) return sym; // index
+  if (sym.includes("=")) return sym; // futures/forex like GC=F, INR=X
   if (sym.includes(".")) return sym; // already formatted
   if (GLOBAL_TICKERS.has(sym)) return sym;
   if (exchange === "BSE") return `${sym}.BO`;
