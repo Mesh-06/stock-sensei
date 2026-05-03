@@ -116,6 +116,7 @@
 }
 
 @layer base {
+  #lovable-badge { display: none !important; }
   * { @apply border-border; }
   html { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
   html, body { @apply overflow-x-hidden; }
