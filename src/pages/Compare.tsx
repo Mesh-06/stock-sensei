@@ -167,7 +167,7 @@ export default function Compare() {
           <>
             <div className="rounded-2xl border border-border bg-card shadow-card overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm min-w-[480px]">
                   <thead>
                     <tr className="border-b border-border bg-background/40">
                       <th className="text-left px-5 py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Metric</th>

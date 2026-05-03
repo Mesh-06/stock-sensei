@@ -51,7 +51,7 @@ export default function Sectors() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 lg:px-6 py-10">
-        <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
           <aside className="lg:sticky lg:top-20 self-start">
             <div className="rounded-2xl border border-border bg-card p-3 shadow-card">
               <div className="px-2 py-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">Sectors</div>
@@ -60,7 +60,7 @@ export default function Sectors() {
                   <button
                     key={s.id}
                     onClick={() => setActiveId(s.id)}
-                    className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-left whitespace-nowrap transition ${activeId === s.id ? "gradient-primary text-white shadow-md" : "text-muted-foreground hover:text-foreground hover:bg-accent"}`}
+                    className={`shrink-0 flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium text-left whitespace-nowrap transition ${activeId === s.id ? "gradient-primary text-white shadow-md" : "text-muted-foreground hover:text-foreground hover:bg-accent"}`}
                   >
                     <span className="text-lg">{s.icon}</span> {s.name}
                   </button>
@@ -69,7 +69,7 @@ export default function Sectors() {
             </div>
           </aside>
 
-          <div>
+          <div className="min-w-0">
             <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
               <div className="flex items-start justify-between gap-3 flex-wrap">
                 <div>
