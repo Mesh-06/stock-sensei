@@ -51,7 +51,7 @@ export default function Sectors() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 lg:px-6 py-10">
-        <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
           <aside className="lg:sticky lg:top-20 self-start">
             <div className="rounded-2xl border border-border bg-card p-3 shadow-card">
               <div className="px-2 py-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">Sectors</div>
