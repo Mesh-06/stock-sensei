@@ -32,16 +32,16 @@ export default function StockDetail() {
   const { data: q, isLoading: qLoading, error } = useStock(symbol, exchange);
   const { data: hist } = useStockHistory(symbol, exchange, period);
   const { data: news } = useStockNews(symbol, exchange);
+  const { data: hist } = useStockHistory(symbol, exchange, period);
+const { data: aiHist } = useStockHistory(symbol, exchange, "1y");  // ← add this
 
   // Build OHLCV array from history data to send to Railway
   // This avoids Railway needing to call yfinance at all
   const ohlcvData = useMemo<OHLCVPoint[] | undefined>(() => {
-    if (!hist?.points) return undefined;
-    return hist.points
-      .filter((p: { date: string; open?: number; high?: number; low?: number; close: number; volume?: number }) =>
-        p.close !== undefined && p.close !== null
-      )
-      .map((p: { date: string; open?: number; high?: number; low?: number; close: number; volume?: number }) => ({
+    if (!aiHist?.points) return undefined;   // ← aiHist instead of hist
+    return aiHist.points
+      .filter((p) => p.close !== undefined && p.close !== null)
+      .map((p) => ({
         date:   p.date,
         open:   p.open   ?? p.close,
         high:   p.high   ?? p.close,
@@ -49,7 +49,7 @@ export default function StockDetail() {
         close:  p.close,
         volume: p.volume ?? 0,
       }));
-  }, [hist]);
+  }, [aiHist]);
 
   // Ticker format for yfinance: append .NS or .BO suffix
   const yfTicker = useMemo(() => {
