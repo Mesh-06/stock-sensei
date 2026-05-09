@@ -11,6 +11,7 @@ import { GlossaryTooltip } from "@/components/GlossaryTooltip";
 import { useStock, useStockHistory, useStockNews } from "@/hooks/useStock";
 import { formatCurrency, formatLargeNumber, formatVolume } from "@/services/stocks";
 import { useState } from "react";
+import { StockAnalysisPanel } from "@/components/StockAnalysisPanel";
 
 const PERIODS = [
   { key: "5d", label: "1W" },
@@ -213,6 +214,13 @@ export default function StockDetail() {
               </div>
             </div>
 
+            {/* TGT AI Forecast */}
+            <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 gradient-primary" />
+              <h2 className="text-lg font-bold mb-4">🤖 AI Price Forecast</h2>
+              <StockAnalysisPanel prefilledTicker={`${symbol}${exchange === "NSE" ? ".NS" : exchange === "BSE" ? ".BO" : ""}`} />
+            </div>
+            
             {/* News */}
             <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card">
               <h2 className="text-lg font-bold mb-4">Latest news</h2>
