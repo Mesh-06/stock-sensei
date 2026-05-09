@@ -18,22 +18,31 @@ export interface PredictionResult {
   };
 }
 
+export interface OHLCVPoint {
+  date: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+}
+
 type AnalysisState =
   | { status: "idle" }
   | { status: "loading"; ticker: string }
   | { status: "success"; result: PredictionResult }
   | { status: "error"; message: string };
 
-// ── Set this to your Railway backend URL after deploying ──────
-const API_BASE =
+const API_BASE = (
   import.meta.env.VITE_STOCK_ANALYSIS_API_URL ??
-  "https://your-railway-backend.up.railway.app";
+  "https://web-production-6f2903.up.railway.app"
+).replace(/\/$/, "");
 
 export function useStockAnalysis() {
   const [state, setState] = useState<AnalysisState>({ status: "idle" });
 
   const analyze = useCallback(
-    async (ticker: string, forceRetrain = false) => {
+    async (ticker: string, ohlcv?: OHLCVPoint[], forceRetrain = false) => {
       ticker = ticker.trim().toUpperCase();
       if (!ticker) return;
 
@@ -43,8 +52,11 @@ export function useStockAnalysis() {
         const res = await fetch(`${API_BASE}/analyze`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ticker, force_retrain: forceRetrain }),
-          // Fine-tuning can take 3-5 min — generous timeout via AbortController
+          body: JSON.stringify({
+            ticker,
+            force_retrain: forceRetrain,
+            ohlcv: ohlcv ?? null,   // send OHLCV from page so Railway skips yfinance
+          }),
           signal: AbortSignal.timeout(8 * 60 * 1000),
         });
 

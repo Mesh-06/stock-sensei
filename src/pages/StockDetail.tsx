@@ -8,10 +8,11 @@ import { StockAvatar } from "@/components/StockAvatar";
 import { WatchlistButton } from "@/components/WatchlistButton";
 import { PriceAlertButton } from "@/components/PriceAlertButton";
 import { GlossaryTooltip } from "@/components/GlossaryTooltip";
+import { StockAnalysisPanel } from "@/components/StockAnalysisPanel";
 import { useStock, useStockHistory, useStockNews } from "@/hooks/useStock";
 import { formatCurrency, formatLargeNumber, formatVolume } from "@/services/stocks";
-import { useState } from "react";
-import { StockAnalysisPanel } from "@/components/StockAnalysisPanel";
+import { useState, useMemo } from "react";
+import { OHLCVPoint } from "@/hooks/useStockAnalysis";
 
 const PERIODS = [
   { key: "5d", label: "1W" },
@@ -31,6 +32,33 @@ export default function StockDetail() {
   const { data: q, isLoading: qLoading, error } = useStock(symbol, exchange);
   const { data: hist } = useStockHistory(symbol, exchange, period);
   const { data: news } = useStockNews(symbol, exchange);
+
+  // Build OHLCV array from history data to send to Railway
+  // This avoids Railway needing to call yfinance at all
+  const ohlcvData = useMemo<OHLCVPoint[] | undefined>(() => {
+    if (!hist?.points) return undefined;
+    return hist.points
+      .filter((p: { date: string; open?: number; high?: number; low?: number; close: number; volume?: number }) =>
+        p.close !== undefined && p.close !== null
+      )
+      .map((p: { date: string; open?: number; high?: number; low?: number; close: number; volume?: number }) => ({
+        date:   p.date,
+        open:   p.open   ?? p.close,
+        high:   p.high   ?? p.close,
+        low:    p.low    ?? p.close,
+        close:  p.close,
+        volume: p.volume ?? 0,
+      }));
+  }, [hist]);
+
+  // Ticker format for yfinance: append .NS or .BO suffix
+  const yfTicker = useMemo(() => {
+    if (!symbol) return "";
+    const s = symbol.toUpperCase();
+    if (exchange === "NSE") return `${s}.NS`;
+    if (exchange === "BSE") return `${s}.BO`;
+    return s; // US stocks need no suffix
+  }, [symbol, exchange]);
 
   if (error) {
     return (
@@ -90,7 +118,8 @@ export default function StockDetail() {
             <h2 className="font-bold">Price chart</h2>
             <div className="inline-flex rounded-xl border border-border bg-background p-1">
               {PERIODS.map((p) => (
-                <button key={p.key} onClick={() => setPeriod(p.key)} className={`px-3 py-1 text-xs font-medium rounded-lg transition ${period === p.key ? "gradient-primary text-white" : "text-muted-foreground hover:text-foreground"}`}>
+                <button key={p.key} onClick={() => setPeriod(p.key)}
+                  className={`px-3 py-1 text-xs font-medium rounded-lg transition ${period === p.key ? "gradient-primary text-white" : "text-muted-foreground hover:text-foreground"}`}>
                   {p.label}
                 </button>
               ))}
@@ -190,7 +219,7 @@ export default function StockDetail() {
               </div>
             </div>
 
-            {/* AI analysis */}
+            {/* Existing AI analysis (educational) */}
             <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 gradient-primary" />
               <div className="flex items-center justify-between flex-wrap gap-3">
@@ -214,13 +243,19 @@ export default function StockDetail() {
               </div>
             </div>
 
-            {/* TGT AI Forecast */}
+            {/* TGT AI Price Forecast — new section */}
             <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 gradient-primary" />
-              <h2 className="text-lg font-bold mb-4">🤖 AI Price Forecast</h2>
-              <StockAnalysisPanel prefilledTicker={`${symbol}${exchange === "NSE" ? ".NS" : exchange === "BSE" ? ".BO" : ""}`} />
+              <h2 className="text-lg font-bold mb-1">🤖 AI Price Forecast</h2>
+              <p className="text-xs text-muted-foreground mb-4">
+                Powered by TGT model (GCN + GRU + Transformer) · Uses your page's chart data
+              </p>
+              <StockAnalysisPanel
+                prefilledTicker={yfTicker}
+                ohlcv={ohlcvData}
+              />
             </div>
-            
+
             {/* News */}
             <div className="mt-6 rounded-2xl border border-border bg-card p-6 shadow-card">
               <h2 className="text-lg font-bold mb-4">Latest news</h2>
@@ -230,7 +265,8 @@ export default function StockDetail() {
                 <ul className="space-y-3">
                   {news.items.map((n, i) => (
                     <li key={i}>
-                      <a href={n.url} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border p-3 hover:bg-accent transition">
+                      <a href={n.url} target="_blank" rel="noopener noreferrer"
+                        className="block rounded-xl border border-border p-3 hover:bg-accent transition">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
                             <p className="font-medium text-sm">{n.title}</p>
