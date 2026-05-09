@@ -31,9 +31,8 @@ export default function StockDetail() {
 
   const { data: q, isLoading: qLoading, error } = useStock(symbol, exchange);
   const { data: hist } = useStockHistory(symbol, exchange, period);
+  const { data: aiHist } = useStockHistory(symbol, exchange, "1y");
   const { data: news } = useStockNews(symbol, exchange);
-  const { data: hist } = useStockHistory(symbol, exchange, period);
-const { data: aiHist } = useStockHistory(symbol, exchange, "1y");  // ← add this
 
   // Build OHLCV array from history data to send to Railway
   // This avoids Railway needing to call yfinance at all
