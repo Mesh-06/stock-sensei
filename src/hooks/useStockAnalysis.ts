@@ -57,7 +57,7 @@ export function useStockAnalysis() {
             force_retrain: forceRetrain,
             ohlcv: ohlcv ?? null,   // send OHLCV from page so Railway skips yfinance
           }),
-          signal: AbortSignal.timeout(8 * 60 * 1000),
+          signal: AbortSignal.timeout(15 * 60 * 1000),
         });
 
         if (!res.ok) {
