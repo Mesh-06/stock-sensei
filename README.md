@@ -35,8 +35,8 @@ AI-powered stock market forecasting and educational platform developed using Mac
 Originally developed collaboratively with teammates from NIT Delhi.
 
 ## Screenshots
-![image_alt](https://github.com/Mesh-06/stock-sensei/blob/7fc7c0002a352d391b9d7f5f866ee5ff9e955e8e/o1.png)
-(Add screenshots here later)
+![image_alt]([https://github.com/Mesh-06/stock-sensei/blob/7fc7c0002a352d391b9d7f5f866ee5ff9e955e8e/o1.png](https://github.com/Mesh-06/stock-sensei/blob/6ffafcbbcf612bca02c3bb530e6ac5ddc728f18e/ss1.png))
+
 
 ## Installation
 
