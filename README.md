@@ -21,7 +21,7 @@ AI-powered stock market forecasting and educational platform developed using Mac
 - Vercel
 
 ## Live Demo
-[Add your deployed link here]
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](https://stock-sensei-tau.vercel.app/)
 
 ## My Contributions
 - Backend integration
