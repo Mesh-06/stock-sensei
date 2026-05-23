@@ -36,7 +36,7 @@ Originally developed collaboratively with teammates from NIT Delhi.
 
 ## Screenshots
 ![image_alt](https://github.com/Mesh-06/stock-sensei/blob/6ffafcbbcf612bca02c3bb530e6ac5ddc728f18e/ss1.png)
-<img src="[assets/home.png](https://github.com/Mesh-06/stock-sensei/blob/6ffafcbbcf612bca02c3bb530e6ac5ddc728f18e/ss1.png)" width="700"/>
+
 
 ![image_alt](https://github.com/Mesh-06/stock-sensei/blob/fdf2d7aa865935de88d42692a6ff49fd4df5107c/ss2.png)
 
